@@ -34,4 +34,4 @@ class Embed:
     async def returned_value(self, interaction):
             name = self.select.values[0]
             self.important, pointless_var = await handle_stats(name, self.username)
-            interaction.response.send_message(self.important)
+            await interaction.response.send_message(self.important)
