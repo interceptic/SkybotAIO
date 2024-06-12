@@ -1,7 +1,7 @@
 import discord
 import asyncio
 from discord.ext import commands
-from bot.modals.evalue import send_embed
+from bot.modals.evalue import Embed
 
 intents = discord.Intents.default()
 intents.members = True 
@@ -16,5 +16,6 @@ async def on_ready():
 
 @bot.slash_command(name='value', description='Skyblock Account Value')
 async def value(ctx, name: str): 
-    await ctx.respond('Waiting to be made into something :)')
-    await send_embed(ctx, name)
+    await ctx.respond('Fetching API Data... please wait.')
+    embed = Embed()
+    await embed.send_embed(ctx, name)

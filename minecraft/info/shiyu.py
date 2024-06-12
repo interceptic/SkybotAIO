@@ -1,6 +1,6 @@
 import asyncio
 import aiohttp
-from username import user_data
+from minecraft.info.username import user_data
 
 
 async def shiyu_data(username):

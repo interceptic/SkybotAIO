@@ -1,0 +1,35 @@
+{
+    "bot": {
+        "token": "",
+        "owner_discord_id": ""
+    },
+    "pricing": {
+        "catacombs": 1.00,
+        "skill_average": 1.00,
+        "slayers": 1.00,
+        "powder": 1.00,
+        "hotm": 1.00,
+        "networth_unsb": 1.00,
+        "networth_sb": 1.00
+
+
+    },
+    "advanced": {
+        "hotm7": 1.00,
+        "hotm10": 1.00,
+        "cata24": 1.00,
+        "farming": 1.00,
+        "mining": 1.00,
+        "combat": 1.00,
+        "foraging": 1.00,
+        "fishing": 1.00,
+        "eman7": 1.00,
+        "rev8": 1.00,
+        "slayer_wolf": 1.00,
+        "slayer_spider": 1.00,
+        "slayer_zombie": 1.00,
+        "slayer_enderman": 1.00,
+        "slayer_blaze": 1.00,
+        "iron_man": 1.00
+    }
+}
