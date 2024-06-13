@@ -2,6 +2,9 @@ import discord
 import asyncio
 from discord.ext import commands
 from bot.modals.evalue import Embed
+from bot.modals.admin import give_admin
+import json
+
 
 intents = discord.Intents.default()
 intents.members = True 
@@ -19,3 +22,15 @@ async def value(ctx, name: str):
     await ctx.respond('Fetching API Data... please wait.')
     embed = Embed()
     await embed.send_embed(ctx, name)
+
+
+@bot.slash_command(name='admin', description='Give or remove admin from yourself...')
+async def admin(ctx, remove: bool):
+    with open("config.json") as conf:
+        config = json.load(conf)
+    if ctx.author.id != config['bot']['owner_discord_id']:
+        ctx.send("Sorry, you're not allowed to use this command")
+        return
+    await give_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
+    
+    
