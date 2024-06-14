@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 from bot.modals.evalue import Embed
-from bot.modals.admin import give_admin
+from bot.modals.admin import give_admin, remove_admin
 import json
 
 
@@ -25,12 +25,14 @@ async def value(ctx, name: str):
 
 
 @bot.slash_command(name='admin', description='Give or remove admin from yourself...')
-async def admin(ctx, remove: bool):
+async def admin(ctx, remove: bool = False):
     with open("config.json") as conf:
         config = json.load(conf)
     if ctx.author.id != config['bot']['owner_discord_id']:
         ctx.send("Sorry, you're not allowed to use this command")
         return
+    if remove: 
+        await remove_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
+        return 
     await give_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
-    
-    
+    return
