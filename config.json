@@ -5,13 +5,15 @@
         "admin_role_id": 0
     },
     "pricing": {
-        "catacombs": 1.00,
+        "catacombs": 2.50,
         "skill_average": 1.00,
         "slayers": 1.00,
-        "powder": 1.00,
+        "mithril_powder": 0.18,
+        "gemstone_powder": 0.18,
+        "glacite_powder": 0.18,
         "hotm": 1.00,
-        "networth_unsb": 1.00,
-        "networth_sb": 1.00
+        "networth_unsb": 0.025,
+        "networth_sb": 0.005
 
 
     },

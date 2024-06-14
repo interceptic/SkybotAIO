@@ -29,7 +29,7 @@ async def admin(ctx, remove: bool = False):
     with open("config.json") as conf:
         config = json.load(conf)
     if ctx.author.id != config['bot']['owner_discord_id']:
-        ctx.send("Sorry, you're not allowed to use this command")
+        await ctx.respond("Sorry, you're not allowed to use this command", ephemeral=True)
         return
     if remove: 
         await remove_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
