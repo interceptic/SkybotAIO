@@ -4,6 +4,7 @@ from discord.ext import commands
 from bot.modals.evalue import Embed
 from bot.modals.admin import give_admin, remove_admin
 import json
+import datetime
 
 
 intents = discord.Intents.default()
@@ -19,9 +20,27 @@ async def on_ready():
 
 @bot.slash_command(name='value', description='Skyblock Account Value')
 async def value(ctx, name: str): 
-    await ctx.respond('Fetching API Data... please wait.')
-    embed = Embed()
-    await embed.send_embed(ctx, name)
+    embed = discord.Embed(
+        title=f"Fetching...",
+        description=f"Obtaining data from api, please wait...",
+        color=0xFF007B
+    )
+    embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
+    embed.timestamp = datetime.datetime.now()
+    await ctx.respond(embed=embed)
+    try:
+        class_thing = Embed()
+        await class_thing.send_embed(ctx, name)
+    except TypeError as error:
+        embed = discord.Embed(
+        title=f"Exception Triggered",
+        description=f"Username '**{name}**' Not Found",
+        color=0xFF0000
+        )
+        embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
+        embed.timestamp = datetime.datetime.now()
+        await ctx.respond(embed=embed)
+
 
 
 @bot.slash_command(name='admin', description='Give or remove admin from yourself...')

@@ -2,6 +2,9 @@ import json
 from minecraft.pricing.values.catacombs import catacombs
 from minecraft.pricing.values.networth import networth
 from minecraft.pricing.values.hotm import hotm
+from minecraft.pricing.values.skills import skills
+from minecraft.pricing.values.slayers import slayers
+
 
 with open("config.json") as conf:
     config = json.load(conf)
@@ -26,6 +29,7 @@ async def pricer(dict, username):
             "unsoulbound": 0,
             "soulbound": 0
         },
+        "total_skills": 0,
         "skills": {
             "average": 0,
             "combat": 0,
@@ -34,6 +38,7 @@ async def pricer(dict, username):
             "mining": 0,
             "farming": 0
         },
+        "total_slayers": 0,
         "slayers": {
             "zombie": 0,
             "spider": 0,
@@ -47,6 +52,8 @@ async def pricer(dict, username):
     dict, priced_dict, username = await catacombs(dict, priced_dict, username)
     dict, priced_dict, username = await networth(dict, priced_dict, username)
     dict, priced_dict, username = await hotm(dict, priced_dict, username)
+    dict, priced_dict, username = await skills(dict, priced_dict, username)
+    dict, priced_dict, username = await slayers(dict, priced_dict, username)
 
     a = 's'
     return priced_dict, a

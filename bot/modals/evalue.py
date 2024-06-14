@@ -20,8 +20,8 @@ class Embed:
                 self.name = data[username]['profiles'][active_profile]['cute_name']
         
         embed = discord.Embed(
-                        title = f"**Price Breakdown for Profile: {self.name}**",
-                        description = f"",
+                        title = f"**Price Breakdown**",
+                        description = f"[{self.username}: {self.name}](https://sky.shiiyu.moe/stats/{self.username}/{self.name})",
                         color=0x00F3FF
                         )
         embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
@@ -44,13 +44,13 @@ class Embed:
         embed.add_field(name='**Catacombs**', value=f"${self.priced[self.username]['cata']['level']}")  
         embed.add_field(name="**HOTM**", value = f"${self.priced[self.username]['total_hotm']}")
         embed.add_field(name='**Crimson Isle**', value='$0')
-        embed.add_field(name='**Slayers**', value='$0')
-        embed.add_field(name='**Skills**', value='$0')
+        embed.add_field(name='**Slayers**', value=f"${self.priced[self.username]['total_slayers']}")
+        embed.add_field(name='**Skills**', value=f"${self.priced[self.username]['total_skills']}")
         
 
 
         self.select.callback = self.returned_value
-        await ctx.send(embed=embed, view=view)
+        await ctx.edit(embed=embed, view=view)
 
     async def returned_value(self, interaction):
             name = self.select.values[0]

@@ -29,7 +29,7 @@ async def hotm(dict, priced_dict, username):
     priced_dict[username]['hotm']['mithril_powder'] = round(dict[username]['hotm']['mithril_powder'] / 100000) * config['pricing']['mithril_powder']
     priced_dict[username]['hotm']['gemstone_powder'] = round(dict[username]['hotm']['gemstone_powder'] / 100000) * config['pricing']['gemstone_powder']
     priced_dict[username]['hotm']['glacite_powder'] = round(dict[username]['hotm']['glacite_powder'] / 100000) * config['pricing']['glacite_powder']
-    priced_dict[username]['total_hotm'] =  priced_dict[username]['hotm']['level'] + priced_dict[username]['hotm']['mithril_powder'] + priced_dict[username]['hotm']['gemstone_powder'] + priced_dict[username]['hotm']['glacite_powder']
+    priced_dict[username]['total_hotm'] =  round(priced_dict[username]['hotm']['level'] + priced_dict[username]['hotm']['mithril_powder'] + priced_dict[username]['hotm']['gemstone_powder'] + priced_dict[username]['hotm']['glacite_powder'], 2)
     
     
     
