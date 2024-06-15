@@ -5,13 +5,13 @@
         "admin_role_id": 0
     },
     "pricing": {
-        "catacombs": 2.50,
+        "catacombs": 2.30,
         "slayers": 0.50,
         "mithril_powder": 0.18,
         "gemstone_powder": 0.18,
         "glacite_powder": 0.18,
         "hotm": 1.00,
-        "networth_unsb": 0.025,
+        "networth_unsb": 0.0225,
         "networth_sb": 0.005
 
 
@@ -20,11 +20,11 @@
         "hotm7": 1.00,
         "hotm10": 1.00,
         "cata24": 1.00,
-        "farming": 2.00,
-        "mining": 2.00,
-        "combat": 2.00,
+        "farming": 1.70,
+        "mining": 1.40,
+        "combat": 0.90,
         "foraging": 1.00,
-        "fishing": 2.00,
+        "fishing": 1.70,
         "eman7": 1.00,
         "rev8": 1.00,
         "slayer_wolf": 1.00,
@@ -32,6 +32,7 @@
         "slayer_zombie": 1.00,
         "slayer_enderman": 1.00,
         "slayer_blaze": 1.00,
-        "iron_man": 1.00
+        "iron_man": 1.00,
+        "crimson": 1.00
     }
 }

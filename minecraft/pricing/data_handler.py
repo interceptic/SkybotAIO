@@ -42,6 +42,10 @@ async def handle_stats(selected_profile, username):
             "enderman": 0,
             "vampire": 0,
             "blaze": 0
+        },
+        "crimson": {
+            "mage": 0,
+            "barbarian": 0
         }
     }
 }
@@ -123,7 +127,14 @@ async def handle_stats(selected_profile, username):
         newDict[username]['slayers']['blaze'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["blaze"]["level"]["currentLevel"]
     except KeyError as error:
         print(f"KeyError: {error}, likely irrelevant.")
-
+    try:
+        newDict[username]['crimson']['mage'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["mages_reputation"]
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")
+    try:
+        newDict[username]['crimson']['barbarian'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["barbarians_reputation"]
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")
     s = 'a'
     return newDict, s
 

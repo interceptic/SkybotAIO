@@ -4,6 +4,7 @@ from minecraft.pricing.values.networth import networth
 from minecraft.pricing.values.hotm import hotm
 from minecraft.pricing.values.skills import skills
 from minecraft.pricing.values.slayers import slayers
+from minecraft.pricing.values.crimson import crimson
 
 
 with open("config.json") as conf:
@@ -46,6 +47,11 @@ async def pricer(dict, username):
             "enderman": 0,
             "vampire": 0,
             "blaze": 0
+        },
+        "total_crimson": 0,
+        "crimson": {
+            "mage": 0,
+            "barbarian": 0
         }
     }}
 
@@ -54,6 +60,9 @@ async def pricer(dict, username):
     dict, priced_dict, username = await hotm(dict, priced_dict, username)
     dict, priced_dict, username = await skills(dict, priced_dict, username)
     dict, priced_dict, username = await slayers(dict, priced_dict, username)
+    priced_dict = await crimson(dict, priced_dict, username)
+
+    priced_dict[username]['total'] = round(priced_dict[username]['cata']['level'] + priced_dict[username]['total_hotm'] + priced_dict[username]['total_nw'] + priced_dict[username]['total_skills'] + priced_dict[username]['total_slayers'] + priced_dict[username]['total_crimson'], 2)
 
     a = 's'
     return priced_dict, a
