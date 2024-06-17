@@ -36,21 +36,21 @@ class Embed:
 
         self.select = Select(placeholder='Profile')    
         for i in data[username]['names']:
-            if i != self.name:
+            if i != self.name and len(self.list) != 1:
                 self.select.add_option(label=f'{i}')
-            if len(data[username]['names']) == 1:
+            elif len(self.list) == 1:
                 self.select.add_option(label=f"{i}")
         view = View()
         view.add_item(self.select)
         self.ctx = ctx
 
-        embed.add_field(name="**Total Price**", value = f"${self.priced[self.username]['total']}", inline=False)
-        embed.add_field(name="**Networth**", value = f"${self.priced[self.username]['total_nw']}")
-        embed.add_field(name='**Catacombs**', value=f"${self.priced[self.username]['cata']['level']}")  
-        embed.add_field(name="**HOTM**", value = f"${self.priced[self.username]['total_hotm']}")
-        embed.add_field(name='**Crimson Isle**', value=f"${self.priced[self.username]['total_crimson']}")
-        embed.add_field(name='**Slayers**', value=f"${self.priced[self.username]['total_slayers']}")
-        embed.add_field(name='**Skills**', value=f"${self.priced[self.username]['total_skills']}")
+        embed.add_field(name="**Total Price**", value = f"${round(self.priced[self.username]['total'], 2)}", inline=False)
+        embed.add_field(name="**Networth**", value = f"${round(self.priced[self.username]['total_nw'], 2)}")
+        embed.add_field(name='**Catacombs**', value=f"${round(self.priced[self.username]['cata']['level'], 2)}")  
+        embed.add_field(name="**HOTM**", value = f"${round(self.priced[self.username]['total_hotm'], 2)}")
+        embed.add_field(name='**Crimson Isle**', value=f"${round(self.priced[self.username]['total_crimson'], 2)}")
+        embed.add_field(name='**Slayers**', value=f"${round(self.priced[self.username]['total_slayers'], 2)}")
+        embed.add_field(name='**Skills**', value=f"${round(self.priced[self.username]['total_skills'], 2)}")
         
 
 
@@ -70,9 +70,9 @@ class Embed:
         
         self.select.options = []
         for i in self.data[self.username]['names']:
-            if i != self.name:
+            if i != self.name and len(self.list) != 1:
                 self.select.add_option(label=f'{i}')
-            if len(self.data[self.username]['names']) == 1:
+            elif len(self.list) == 1:
                 self.select.add_option(label=f"{i}")
         self.select.placeholder = self.name        
         
@@ -88,13 +88,13 @@ class Embed:
         embed.thumbnail = f"https://mc-heads.net/head/{self.uuid['id']}.png/"   
         view = View()
         view.add_item(self.select)
-        embed.add_field(name="**Total Price**", value = f"${self.priced[self.username]['total']}", inline=False)
-        embed.add_field(name="**Networth**", value = f"${self.priced[self.username]['total_nw']}")
-        embed.add_field(name='**Catacombs**', value=f"${self.priced[self.username]['cata']['level']}")  
-        embed.add_field(name="**HOTM**", value = f"${self.priced[self.username]['total_hotm']}")
-        embed.add_field(name='**Crimson Isle**', value=f"${self.priced[self.username]['total_crimson']}")
-        embed.add_field(name='**Slayers**', value=f"${self.priced[self.username]['total_slayers']}")
-        embed.add_field(name='**Skills**', value=f"${self.priced[self.username]['total_skills']}")
+        embed.add_field(name="**Total Price**", value = f"${round(self.priced[self.username]['total'], 2)}", inline=False)
+        embed.add_field(name="**Networth**", value = f"${round(self.priced[self.username]['total_nw'], 2)}")
+        embed.add_field(name='**Catacombs**', value=f"${round(self.priced[self.username]['cata']['level'], 2)}")  
+        embed.add_field(name="**HOTM**", value = f"${round(self.priced[self.username]['total_hotm'], 2)}")
+        embed.add_field(name='**Crimson Isle**', value=f"${round(self.priced[self.username]['total_crimson'], 2)}")
+        embed.add_field(name='**Slayers**', value=f"${round(self.priced[self.username]['total_slayers'], 2)}")
+        embed.add_field(name='**Skills**', value=f"${round(self.priced[self.username]['total_skills'], 2)}")
         
 
 

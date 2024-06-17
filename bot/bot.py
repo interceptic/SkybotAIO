@@ -5,7 +5,7 @@ from bot.modals.evalue import Embed
 from bot.modals.admin import give_admin, remove_admin
 import json
 import datetime
-
+from bot.modals.list import Setup
 
 intents = discord.Intents.default()
 intents.members = True 
@@ -21,7 +21,7 @@ async def on_ready():
 @bot.slash_command(name='value', description='Skyblock Account Value')
 async def value(ctx, name: str): 
     embed = discord.Embed(
-        title=f"Fetching...",
+        title="Fetching...",
         description=f"Obtaining data from api, please wait...",
         color=0xFF007B
     )
@@ -33,7 +33,7 @@ async def value(ctx, name: str):
         await class_thing.send_embed(ctx, name)
     except TypeError as error:
         embed = discord.Embed(
-        title=f"Exception Triggered",
+        title="Exception Triggered",
         description=f"Error: {error}",
         color=0xFF0000
         )
@@ -55,3 +55,9 @@ async def admin(ctx, remove: bool = False):
         return 
     await give_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
     return
+
+
+@bot.slash_command(name='list', description="List an account")
+async def list(ctx, username: str, price: int):
+    setup = Setup
+    await setup.check(ctx)
