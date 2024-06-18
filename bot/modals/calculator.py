@@ -6,9 +6,9 @@ def calculate(amount, option):
         return amount    
     if amount <= 300:
         amount *= 0.08
-    if amount <= 600 and amount > 300:
+    if amount <= 599 and amount > 300:
         amount *= 0.06
-    if amount > 600:
+    if amount >= 600:
         amount *= 0.045
     return amount
         

@@ -34,15 +34,8 @@ async def value(ctx, name: str):
     try:
         class_thing = Embed()
         await class_thing.send_embed(ctx, name)
-    except TypeError as error:
-        embed = discord.Embed(
-        title="Exception Triggered",
-        description=f"Error: {error}",
-        color=0xFF0000
-        )
-        embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
-        embed.timestamp = datetime.datetime.now()
-        await ctx.respond(embed=embed)
+    except Exception as error:
+        print(error)
 
 
 
@@ -59,26 +52,23 @@ async def admin(ctx, remove: bool = False):
     await give_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
     return
 
-
 @bot.slash_command(name='list', description="List an account")
 async def list(ctx, username: str, price: int, profile: bool):
     setup = Setup
     await setup.check(ctx)
-    
-@bot.slash_command(name='buy', description="Calculate the price for coins")
-async def buy(ctx, amount: int):
-    value = calculate(amount, False)
-    amount = representTBMK(amount * 1000000)    
-    embed = await build(f"Price for {amount}", f"You can buy {amount} for ${round(value, 2)} USD", 0x00FFDC)
-    await ctx.respond(embed=embed)
 
-@bot.slash_command(name='sell', description="Calculate the price for coins")
-async def sell(ctx, amount: int):
-    value = calculate(amount, True)
-    if value == False:
-        embed = await build("Invalid Sell Amount", "Minimum amount to sell is 500 million.", 0xFF0000)
+@bot.slash_command(name='coins', description="Calculate the price for coins")
+async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount: int):
+    if type == "Sell":
+        value = calculate(amount, True)
+        if value == False:
+            embed = await build("Invalid Sell Amount", "Minimum amount to sell is 500 million.", 0xFF0000)
+            await ctx.respond(embed=embed)
+            return
+        amount = representTBMK(amount * 1000000)    
+        embed = await build(f"Price for {amount}", f"You can sell {amount} for ${round(value, 2)} USD", 0x00FFDC)
+    elif type == "Buy":
+        value = calculate(amount, False)
+        amount = representTBMK(amount * 1000000)    
+        embed = await build(f"Price for {amount}", f"You can buy {amount} for ${round(value, 2)} USD", 0x00FFDC)
         await ctx.respond(embed=embed)
-        return
-    amount = representTBMK(amount * 1000000)    
-    embed = await build(f"Price for {amount}", f"You can sell {amount} for ${round(value, 2)} USD", 0x00FFDC)
-    await ctx.respond(embed=embed)

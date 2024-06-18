@@ -2,8 +2,8 @@ from minecraft.info.shiyu import shiyu_data
 statistics = {}
 
 
-async def user_stats(username):
-    statistics[username] = await shiyu_data(username) # calls the function to get data
+async def user_stats(ctx, username):
+    statistics[username] = await shiyu_data(ctx, username) # calls the function to get data
     statistics[username]['names'] = [statistics[username]['profiles'][f'{profile_id}']['cute_name'] for profile_id in statistics[username]['profiles']] # returns the names of profiles
     statistics[username]['profile_ids'] = {name: profile_id for name, profile_id in zip(statistics[username]['names'], statistics[username]['profiles'])}
     return statistics

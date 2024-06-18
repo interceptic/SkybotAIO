@@ -13,7 +13,7 @@ class Embed:
         global returned_value
         self.list = []
         self.username = username
-        data = await user_stats(username)
+        data = await user_stats(ctx, username)
         self.data = data
         for s in data[username]['profiles']:
             if data[username]['profiles'][s]['current'] == True:
@@ -28,7 +28,7 @@ class Embed:
                         )
         embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
         embed.timestamp = datetime.datetime.now()
-        self.uuid = await user_data(username)
+        self.uuid = await user_data(ctx, username)
         embed.thumbnail = f"https://mc-heads.net/head/{self.uuid['id']}.png/"   
         
         self.important, pointless_var = await handle_stats(self.name, self.username)
