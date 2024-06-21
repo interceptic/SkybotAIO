@@ -16,6 +16,8 @@ async def button2(discord_int, title, label):
             async def callback(self, interaction: discord.Interaction):
                 global embed
                 user_input = self.children[0].value
+                await interaction.response.defer()
+               
                 await button3(discord_int, "Profile Category ID", "ID")
         await interaction.response.send_modal(InputModal())
 

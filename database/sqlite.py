@@ -10,11 +10,13 @@ async def setup():
             CREATE TABLE IF NOT EXISTS [info] (
                 [guild_id] INTEGER,
                 [ign] TEXT,
+                [category_id_account] TEXT,
                 [channel_id] INTEGER,
                 [message_id] INTEGER,
                 [price] FLOAT,
                 [payment_methods] TEXT,
                 [seller_discord_id] INTEGER,
-                [buyer_discord_id] INTEGER
+                [buyer_discord_id] INTEGER,
+                [category_id_tickets] INTEGER,
             )
         ''')
