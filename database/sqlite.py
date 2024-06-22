@@ -1,22 +1,19 @@
-import os
 import aiosqlite
-from discord.ext import commands
 
-# IDK HOW TO DO SQLITE 
-
-async def setup():
+async def setup_db():
     async with aiosqlite.connect('./database/database.db') as sqlite:
-        await database.execute('''
+        await sqlite.execute('''
             CREATE TABLE IF NOT EXISTS [info] (
                 [guild_id] INTEGER,
-                [ign] TEXT,
-                [category_id_account] TEXT,
-                [channel_id] INTEGER,
-                [message_id] INTEGER,
-                [price] FLOAT,
-                [payment_methods] TEXT,
-                [seller_discord_id] INTEGER,
-                [buyer_discord_id] INTEGER,
+                [category_id_account] INTEGER,
+                [seller_id] INTEGER,
+                [category_id_profile] INTEGER,
                 [category_id_tickets] INTEGER,
+                [coin_price_buy] FLOAT,
+                [coin_price_sell] FLOAT
             )
         ''')
+        await sqlite.commit()
+        print('Commited')
+
+

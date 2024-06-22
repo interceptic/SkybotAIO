@@ -9,6 +9,9 @@ from bot.modals.list import Setup
 from bot.modals.calculator import calculate
 from bot.build_embed import build
 from minecraft.info.tmbk import representTBMK
+import aiosqlite
+from database.sqlite import setup_db
+import os
 
 intents = discord.Intents.default()
 intents.members = True 
@@ -59,6 +62,15 @@ async def list(ctx, username: str, price: int, profile: bool):
 
 @bot.slash_command(name='coins', description="Calculate the price for coins")
 async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount: int):
+    guild = await guild_in_db(ctx)
+    if not guild:
+        embed = await build('Server not in Database', "Sorry, please wait 3 seconds and start the setup process", 0xFF0000)
+        setup = Setup
+        await ctx.respond(embed=embed)
+        await asyncio.sleep(3)
+        await setup.check(ctx)
+        return
+    
     if type == "Sell":
         value = calculate(amount, True)
         if value == False:
@@ -72,3 +84,17 @@ async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount:
         amount = representTBMK(amount * 1000000)    
         embed = await build(f"Price for {amount}", f"You can buy {amount} for ${round(value, 2)} USD", 0x00FFDC)
         await ctx.respond(embed=embed)
+        
+        
+    
+async def guild_in_db(ctx):
+    if not os.path.exists("./database/database.db"):
+        await setup_db()
+        return
+    async with aiosqlite.connect('./database/database.db') as sqlite:
+        async with sqlite.execute('SELECT COUNT(*) FROM info WHERE guild_id = ?', (ctx.guild.id,)) as cursor:
+            result = await cursor.fetchone()
+            exists = result[0] > 0  # This will be True if guild id exists, otherwise False
+            return exists
+
+        
