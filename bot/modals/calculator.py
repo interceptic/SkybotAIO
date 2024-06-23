@@ -1,15 +1,32 @@
-def calculate(amount, option):
+import aiosqlite
+
+async def calculate(ctx, amount, option):
+    if ctx.guild.id == 1227804021142589512:
+        if option:
+            if amount <= 499:
+                amount = False
+            amount *= 0.025
+            return amount    
+        if amount <= 300:
+            amount *= 0.08
+        if amount <= 599 and amount > 300:
+            amount *= 0.06
+        if amount >= 600:
+            amount *= 0.045
+        return amount
+    async with aiosqlite.connect('./database/database.db') as database:
+        async with database.execute(
+            'SELECT coin_price_buy, coin_price_sell FROM info WHERE guild_id = ?', (ctx.guild.id,)
+        ) as cursor:
+            values = await cursor.fetchone()
+    coin_price_buy, coin_price_sell = values
     if option:
         if amount <= 499:
             amount = False
-        amount *= 0.025
+        amount *= coin_price_sell
         return amount    
-    if amount <= 300:
-        amount *= 0.08
-    if amount <= 599 and amount > 300:
-        amount *= 0.06
-    if amount >= 600:
-        amount *= 0.045
+    amount *= coin_price_buy
     return amount
+            
         
     

@@ -56,9 +56,17 @@ async def admin(ctx, remove: bool = False):
     return
 
 @bot.slash_command(name='list', description="List an account")
-async def list(ctx, username: str, price: int, profile: bool):
+async def list(ctx, username: str, price: int, profile: bool, payment_methods: str):
+    guild = await guild_in_db(ctx)
+    if not guild:
+        embed = await build('Server not in Database', "Sorry, please wait 3 seconds and start the setup process", 0xFF0000)
+        setup = Setup
+        await ctx.respond(embed=embed)
+        await asyncio.sleep(3)
+        await setup.check(ctx)
+        return
     setup = Setup
-    await setup.check(ctx)
+    await setup.create_channel(ctx, username, price, profile, payment_methods)
 
 @bot.slash_command(name='coins', description="Calculate the price for coins")
 async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount: int):
@@ -72,15 +80,17 @@ async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount:
         return
     
     if type == "Sell":
-        value = calculate(amount, True)
+        value = await calculate(ctx, amount, True)
         if value == False:
             embed = await build("Invalid Sell Amount", "Minimum amount to sell is 500 million.", 0xFF0000)
             await ctx.respond(embed=embed)
             return
         amount = representTBMK(amount * 1000000)    
         embed = await build(f"Price for {amount}", f"You can sell {amount} for ${round(value, 2)} USD", 0x00FFDC)
+        await ctx.respond(embed=embed)
+        return
     elif type == "Buy":
-        value = calculate(amount, False)
+        value = await calculate(ctx, amount, False)
         amount = representTBMK(amount * 1000000)    
         embed = await build(f"Price for {amount}", f"You can buy {amount} for ${round(value, 2)} USD", 0x00FFDC)
         await ctx.respond(embed=embed)
@@ -90,7 +100,7 @@ async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount:
 async def guild_in_db(ctx):
     if not os.path.exists("./database/database.db"):
         await setup_db()
-        return
+        return False
     async with aiosqlite.connect('./database/database.db') as sqlite:
         async with sqlite.execute('SELECT COUNT(*) FROM info WHERE guild_id = ?', (ctx.guild.id,)) as cursor:
             result = await cursor.fetchone()
