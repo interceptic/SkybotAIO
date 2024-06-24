@@ -56,7 +56,7 @@ async def admin(ctx, remove: bool = False):
     return
 
 @bot.slash_command(name='list', description="List an account")
-async def list(ctx, username: str, price: int, profile: bool, payment_methods: str):
+async def list(ctx, username: str, price: int, profile: bool = False, payment_methods: str = '', extra_info: str = ''):
     await ctx.response.defer()
     guild = await guild_in_db(ctx)
     if not guild:
@@ -66,8 +66,21 @@ async def list(ctx, username: str, price: int, profile: bool, payment_methods: s
         await asyncio.sleep(3)
         await setup.check(ctx)
         return
+    
+    async with aiosqlite.connect('./database/database.db') as database:
+        async with database.execute(
+            'SELECT seller_id FROM info WHERE guild_id = ?', (ctx.guild.id,)
+        ) as cursor:
+            value = await cursor.fetchone()
+    role = discord.utils.get(ctx.guild.roles, id=value[0])
+    if not role in ctx.author.roles:
+        await ctx.respond('You need seller role to run this command', ephemeral=True)
+        return
+
+    
+    
     setup = Setup
-    await setup.create_channel(ctx, username, price, profile, payment_methods)
+    await setup.create_channel(ctx, username, price, profile, payment_methods, extra_info)
 
 @bot.slash_command(name='coins', description="Calculate the price for coins")
 async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount: int):

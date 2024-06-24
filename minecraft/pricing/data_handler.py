@@ -45,6 +45,7 @@ async def handle_stats(selected_profile, username):
             "blaze": 0
         },
         "crimson": {
+            "faction": "N/A",
             "mage": 0,
             "barbarian": 0
         },
@@ -156,6 +157,20 @@ async def handle_stats(selected_profile, username):
         newDict[username]['minions']['bonus'] = statistics[username]["profiles"][location]["data"]["misc"]["profile_upgrades"]["minion_slots"]
     except KeyError as error:
         print(f"KeyError: {error}, likely irrelevant.")
+    try:
+        newDict[username]['crimson']['faction'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["selected_faction"]
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")
+    try:
+        newDict[username]['weight']['senither'] = round(statistics[username]["profiles"][location]["data"]["weight"]["senither"]["overall"], 0)
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")     
+    try:
+        newDict[username]['weight']['lily'] = round(statistics[username]["profiles"][location]["data"]["weight"]["lily"]["total"], 0)
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.") 
+
+
     if 'MVP' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' in statistics[username]['profiles'][location]['data']['rank_prefix']:
         rank = 'MVP+'
     elif 'MVP' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' not in statistics[username]['profiles'][location]['data']['rank_prefix']:
