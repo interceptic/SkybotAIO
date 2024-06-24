@@ -14,6 +14,7 @@ async def handle_stats(selected_profile, username):
     
 
     newDict = {username: {
+        "level": 0,
         "cata": {
             "level": 0
         },
@@ -46,6 +47,14 @@ async def handle_stats(selected_profile, username):
         "crimson": {
             "mage": 0,
             "barbarian": 0
+        },
+        "weight": {
+            "senither": 0,
+            "lily": 0
+        },
+        "minions": {
+            "total": 0,
+            "bonus": 0
         }
     }
 }
@@ -135,7 +144,28 @@ async def handle_stats(selected_profile, username):
         newDict[username]['crimson']['barbarian'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["barbarians_reputation"]
     except KeyError as error:
         print(f"KeyError: {error}, likely irrelevant.")
-    s = 'a'
-    return newDict, s
+    try:
+        newDict[username]['level'] = statistics[username]["profiles"][location]["data"]["skyblock_level"]["level"]
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")
+    try:
+        newDict[username]['minions']['total'] = statistics[username]["profiles"][location]["data"]["minions"]["minion_slots"]["current"]
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")
+    try: 
+        newDict[username]['minions']['bonus'] = statistics[username]["profiles"][location]["data"]["misc"]["profile_upgrades"]["minion_slots"]
+    except KeyError as error:
+        print(f"KeyError: {error}, likely irrelevant.")
+    if 'MVP' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' in statistics[username]['profiles'][location]['data']['rank_prefix']:
+        rank = 'MVP+'
+    elif 'MVP' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' not in statistics[username]['profiles'][location]['data']['rank_prefix']:
+        rank = 'MVP'
+    elif 'VIP+' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' in statistics[username]['profiles'][location]['data']['rank_prefix']:
+        rank = 'VIP+'
+    elif 'VIP' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' not in statistics[username]['profiles'][location]['data']['rank_prefix']:
+        rank = 'VIP'
+    else:
+        rank = 'NON'
+    return newDict, rank
 
 

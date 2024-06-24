@@ -57,6 +57,7 @@ async def admin(ctx, remove: bool = False):
 
 @bot.slash_command(name='list', description="List an account")
 async def list(ctx, username: str, price: int, profile: bool, payment_methods: str):
+    await ctx.response.defer()
     guild = await guild_in_db(ctx)
     if not guild:
         embed = await build('Server not in Database', "Sorry, please wait 3 seconds and start the setup process", 0xFF0000)

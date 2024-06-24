@@ -19,13 +19,16 @@ async def calculate(ctx, amount, option):
             'SELECT coin_price_buy, coin_price_sell FROM info WHERE guild_id = ?', (ctx.guild.id,)
         ) as cursor:
             values = await cursor.fetchone()
+            print(values)
+    
     coin_price_buy, coin_price_sell = values
+    print(coin_price_buy, coin_price_sell)
     if option:
         if amount <= 499:
             amount = False
-        amount *= coin_price_sell
+        amount *= coin_price_buy
         return amount    
-    amount *= coin_price_buy
+    amount *= coin_price_sell
     return amount
             
         
