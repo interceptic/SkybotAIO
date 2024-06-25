@@ -12,9 +12,11 @@ from minecraft.info.tmbk import representTBMK
 import aiosqlite
 from database.sqlite import setup_db
 import os
+from bot.modals.aichat import openai_response
 
 intents = discord.Intents.default()
 intents.members = True 
+intents.message_content = True
 bot = commands.Bot(intents=intents, slash_command_prefix='/')  
 
 @bot.event
@@ -121,4 +123,44 @@ async def guild_in_db(ctx):
             exists = result[0] > 0  # This will be True if guild id exists, otherwise False
             return exists
 
+
+@bot.event
+async def on_message(message):
+    
+    
+    if message.author.guild_permissions.administrator:
+        if '1250030190617165824' in message.content:
+            prompt = f"A server admin in flux qol has said: {message.content}"
+            response = openai_response(prompt, message)
+            if 'role' in response or '@' in response or 'discord.gg' in response or 'discord.com/invite' in response or 'https://' in response:
+                await message.reply('No. Loser.')
+                return
+            await message.reply(response)
         
+    if message.channel.id != 1254978027369136219:
+        return
+    if message.author == bot.user:
+        return
+    # if message.author.id != 1227394151847297148:
+    #     return
+   
+    with open("ai_history.json") as file:
+        history = json.load(file)
+        
+    author_id = str(message.author.id)
+    if author_id not in history['ids']:
+        history['ids'][author_id] = {}
+    if 'messages' not in history['ids'][author_id]:
+        history['ids'][author_id]['messages'] = []
+    history['ids'][author_id]['messages'].append(message.content)
+    with open("ai_history.json", "w") as file:
+        json.dump(history, file, indent=4)
+    
+    prompt = f"The following is a conversation with an assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: {message.content}\nAssistant:"
+    response = openai_response(prompt, message)
+    if 'role' in response or '@' in response or 'discord.gg' in response or 'discord.com/invite' in response or 'https://' in response:
+        await message.reply('No. Loser.')
+        return
+    await message.reply(response)
+    return
+
