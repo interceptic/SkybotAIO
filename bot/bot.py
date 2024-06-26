@@ -14,6 +14,7 @@ from database.sqlite import setup_db
 import os
 from bot.modals.aichat import openai_response
 
+
 intents = discord.Intents.default()
 intents.members = True 
 intents.message_content = True
@@ -126,16 +127,16 @@ async def guild_in_db(ctx):
 
 @bot.event
 async def on_message(message):
-    
+    with open("config.json") as config:
+        config = json.load(config)
+
     
     if message.author.guild_permissions.administrator:
         if '1250030190617165824' in message.content:
             prompt = f"A server admin in flux qol has said: {message.content}"
             response = openai_response(prompt, message)
-            if 'role' in response or '@' in response or 'discord.gg' in response or 'discord.com/invite' in response or 'https://' in response:
-                await message.reply('No. Loser.')
-                return
             await message.reply(response)
+            return
         
     if message.channel.id != 1254978027369136219:
         return
@@ -143,6 +144,13 @@ async def on_message(message):
         return
     # if message.author.id != 1227394151847297148:
     #     return
+   
+   
+    if not config['bot']['ai_chat']:
+        await message.reply('**Sorry, the chatbot isnt currently available for member use. D: **')
+        return
+
+   
    
     with open("ai_history.json") as file:
         history = json.load(file)
@@ -152,14 +160,25 @@ async def on_message(message):
         history['ids'][author_id] = {}
     if 'messages' not in history['ids'][author_id]:
         history['ids'][author_id]['messages'] = []
+    if 'responses' not in history['ids'][author_id]:
+        history['ids'][author_id]['responses'] = []
+    
+    
     history['ids'][author_id]['messages'].append(message.content)
     with open("ai_history.json", "w") as file:
         json.dump(history, file, indent=4)
     
-    prompt = f"The following is a conversation with an assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: {message.content}\nAssistant:"
+    prompt = f"act like a friend but you are also an assistant and do what they say but do not repeat their words: {message.content}"
     response = openai_response(prompt, message)
+    with open("ai_history.json") as file:
+        history = json.load(file)
+    history['ids'][author_id]['responses'].append(response)
+    with open("ai_history.json", "w") as file:
+        json.dump(history, file, indent=4)
+   
+   
     if 'role' in response or '@' in response or 'discord.gg' in response or 'discord.com/invite' in response or 'https://' in response:
-        await message.reply('No. Loser.')
+        await message.reply('**Sorry, this response is restricted - ;)**')
         return
     await message.reply(response)
     return
