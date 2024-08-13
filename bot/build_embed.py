@@ -1,5 +1,6 @@
 import discord
 import datetime
+from discord import Guild
 
 
 async def build(title, description, color):
@@ -8,6 +9,6 @@ async def build(title, description, color):
         description=f"{description}",
         color=color
         )
-    embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_5eca709aa35c37be7872d046e0d60a9d.webp?size=160')
-    embed.timestamp = datetime.datetime.now()
+    # embed.set_footer(text='Made by interceptic', icon_url='https://avatars.githubusercontent.com/u/121205983?s=400&u=e5e1ec3c308a713e198f46aff29038bc4dca1d9d&v=4')
+    # embed.timestamp = datetime.datetime.now()
     return embed

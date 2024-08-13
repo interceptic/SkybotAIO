@@ -25,5 +25,5 @@ async def button4(discord_int, title, label, seller_role, account_cat, profile_c
     
     view = View()
     view.add_item(open_menu_button)
-    embed = await build("Database Not Found", "Please initiate the setup process by clicking the button below \n **Step 4/6**", 0xFF0000)
+    embed = await build("Database Not Found", "Please initiate the setup process by clicking the button below \n **Step 4/9**", 0xFF0000)
     await discord_int.edit(embed=embed, view=view)

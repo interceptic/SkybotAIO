@@ -68,107 +68,107 @@ async def handle_stats(selected_profile, username):
     try: 
         newDict[username]['skills']['average'] = round(statistics[username]['profiles'][location]["data"]["skills"]["averageSkillLevel"]) # average skill level
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:   
         newDict[username]['hotm']['level'] = statistics[username]["profiles"][location]["data"]["mining"]["core"]["level"]["level"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['hotm']['mithril_powder'] = statistics[username]["profiles"][location]["data"]["mining"]["core"]["powder"]["mithril"]["total"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['hotm']['gemstone_powder'] = statistics[username]["profiles"][location]["data"]["mining"]["core"]["powder"]["gemstone"]["total"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['hotm']['glacite_powder'] = statistics[username]["profiles"][location]["data"]["mining"]["core"]["powder"]["glacite"]["total"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['networth']['unsoulbound'] = round(statistics[username]["profiles"][location]["data"]["networth"]["unsoulboundNetworth"])
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['networth']['soulbound'] = round(statistics[username]["profiles"][location]["data"]["networth"]["networth"]) - round(statistics[username]["profiles"][location]["data"]["networth"]["unsoulboundNetworth"])
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['skills']['combat'] = statistics[username]["profiles"][location]["data"]['skills']['skills']['combat']['level']
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['skills']['fishing'] = statistics[username]["profiles"][location]["data"]['skills']['skills']['fishing']['level']
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['skills']['foraging'] = statistics[username]["profiles"][location]["data"]['skills']['skills']['foraging']['level']
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['skills']['mining'] = statistics[username]["profiles"][location]["data"]['skills']['skills']['mining']['level']
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['skills']['farming'] = statistics[username]["profiles"][location]["data"]['skills']['skills']['farming']['level']
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['slayers']['zombie'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["zombie"]["level"]["currentLevel"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['slayers']['spider'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["spider"]["level"]["currentLevel"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['slayers']['wolf'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["wolf"]["level"]["currentLevel"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['slayers']['enderman'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["enderman"]["level"]["currentLevel"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['slayers']['vampire'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["vampire"]["level"]["currentLevel"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['slayers']['blaze'] = statistics[username]["profiles"][location]["data"]["slayer"]["slayers"]["blaze"]["level"]["currentLevel"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['crimson']['mage'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["mages_reputation"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['crimson']['barbarian'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["barbarians_reputation"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['level'] = statistics[username]["profiles"][location]["data"]["skyblock_level"]["level"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['minions']['total'] = statistics[username]["profiles"][location]["data"]["minions"]["minion_slots"]["current"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try: 
         newDict[username]['minions']['bonus'] = statistics[username]["profiles"][location]["data"]["misc"]["profile_upgrades"]["minion_slots"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['crimson']['faction'] = statistics[username]["profiles"][location]["data"]["crimson_isle"]["factions"]["selected_faction"]
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")
+        pass
     try:
         newDict[username]['weight']['senither'] = round(statistics[username]["profiles"][location]["data"]["weight"]["senither"]["overall"], 0)
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.")     
+        pass     
     try:
         newDict[username]['weight']['lily'] = round(statistics[username]["profiles"][location]["data"]["weight"]["lily"]["total"], 0)
     except KeyError as error:
-        print(f"KeyError: {error}, likely irrelevant.") 
+        pass 
 
 
     if 'MVP' in statistics[username]['profiles'][location]['data']['rank_prefix'] and 'rank-plus' in statistics[username]['profiles'][location]['data']['rank_prefix']:

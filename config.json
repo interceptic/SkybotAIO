@@ -3,17 +3,18 @@
         "token": "",
         "owner_discord_id": 0,
         "admin_role_id": 0,
-        "ai_chat": false
+        "ai_chat": false,
+        "statistics": 0
     },
     "pricing": {
-        "catacombs": 2.30,
+        "catacombs": 1.80,
         "slayers": 0.50,
-        "mithril_powder": 0.18,
-        "gemstone_powder": 0.18,
-        "glacite_powder": 0.18,
-        "hotm": 1.00,
-        "networth_unsb": 0.0225,
-        "networth_sb": 0.005
+        "mithril_powder": 0.14,
+        "gemstone_powder": 0.14,
+        "glacite_powder": 0.14,
+        "hotm": 0.80,
+        "networth_unsb": 0.0215,
+        "networth_sb": 0.004
 
 
     },
@@ -21,9 +22,9 @@
         "hotm7": 1.00,
         "hotm10": 1.00,
         "cata24": 1.00,
-        "farming": 1.70,
-        "mining": 1.40,
-        "combat": 0.90,
+        "farming": 1.30,
+        "mining": 1.10,
+        "combat": 0.70,
         "foraging": 1.00,
         "fishing": 1.70,
         "eman7": 1.00,

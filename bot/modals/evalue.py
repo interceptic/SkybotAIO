@@ -5,6 +5,8 @@ from minecraft.pricing.data_handler import user_stats, handle_stats
 from minecraft.info.username import user_data
 from minecraft.pricing.price_data import pricer
 from discord.ui import Select, View
+from discord import Guild
+
 class Embed:
     def __init__(self):
         self = self
@@ -26,7 +28,7 @@ class Embed:
                         description = f"[{self.username}: {self.name}](https://sky.shiiyu.moe/stats/{self.username}/{self.name})",
                         color=0xFFFFFF
                         )
-        embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
+        embed.set_footer(text='Made by interceptic', icon_url='https://avatars.githubusercontent.com/u/121205983?s=400&u=e5e1ec3c308a713e198f46aff29038bc4dca1d9d&v=4')
         embed.timestamp = datetime.datetime.now()
         self.uuid = await user_data(ctx, username)
         embed.thumbnail = f"https://mc-heads.net/head/{self.uuid['id']}.png/"   
@@ -83,7 +85,7 @@ class Embed:
             title = f"**Price Breakdown**",
             description = f"[{self.username}: {self.name}](https://sky.shiiyu.moe/stats/{self.username}/{self.name})",
             color=0xFFFFFF)
-        embed.set_footer(text='Made by interceptic', icon_url='https://cdn.discordapp.com/avatars/1227394151847297148/a_17e8e189d32a91dc7a40f25a1ebcd9c0.webp?size=160')
+        embed.set_footer(text='Made by interceptic', icon_url='https://avatars.githubusercontent.com/u/121205983?s=400&u=e5e1ec3c308a713e198f46aff29038bc4dca1d9d&v=4')
         embed.timestamp = datetime.datetime.now()
         embed.thumbnail = f"https://mc-heads.net/head/{self.uuid['id']}.png/"   
         view = View()
