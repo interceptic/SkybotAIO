@@ -87,14 +87,13 @@ async def generate_ansi(ctx, usernames, prices):
 [2;30m[2;37mSb NW[0m[2;30m[0m:   [2;33m{sbnw}[0m
 [2;30m[2;37mCata[0m[2;30m[0m:    [2;33m{cata}[0m[2;33m
 [0m[2;30m[2;37mHOTM[0m[2;30m[0m:    [2;33m{hotm}[0m
-[2;37mSlayers[0m:[2;33m ({zombie}/{spider}/{wolf}/{enderman}/{vamp}/{blaze})
-    [0mGenerated using ANSIgen https://github.com/interceptic/ANSIgen""")
+[2;37mSlayers[0m:[2;33m ({zombie}/{spider}/{wolf}/{enderman}/{vamp}/{blaze})""")
 
         final = ansi + """
 
 [0m""".join(message)
         final = final + """
-    [0mGenerated using ANSIgen https://github.com/interceptic/ANSIgen``` ``` """
+    `````` -# Generated using ANSIgen [- Here](<https://github.com/interceptic/ANSIgen>)"""
         await ctx.respond(final, ephemeral=True)
     except Exception as error:
         embed = await build('ANSI Error:', f'```{error}``` Please contact <@1227394151847297148> for support', 0xFF0000)
