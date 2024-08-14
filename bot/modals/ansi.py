@@ -79,14 +79,16 @@ async def generate_ansi(ctx, usernames, prices):
                 blaze = shiyu_stats["profiles"][location]["data"]["slayer"]["slayers"]["blaze"]["level"]["currentLevel"]
             except KeyError as error:
                 blaze = 0
-            message.append(f"""[2;31m[2;35m[2;30m[2;37mIGN:     [0m[2;30m[0m[2;35m[0m[2;31m[2;36m{usernames[i]}: ${prices[i]}[0m[2;31m[0m
+            message.append(f"""```
+[2;31m[2;35m[2;30m[2;37mIGN:     [0m[2;30m[0m[2;35m[0m[2;31m[2;36m{usernames[i]}: ${prices[i]}[0m[2;31m[0m
 [2;30m[2;37mLevel[0m[2;30m[0m:   [2;32m[2;33m{level}[0m[2;32m[0m
 [2;30m[2;37mSA[0m[2;30m[0m:      [2;33m{sa}[0m
 [2;37m[0m[2;37mUns NW[0m:  [2;33m{unsnw}[0m
 [2;30m[2;37mSb NW[0m[2;30m[0m:   [2;33m{sbnw}[0m
 [2;30m[2;37mCata[0m[2;30m[0m:    [2;33m{cata}[0m[2;33m
 [0m[2;30m[2;37mHOTM[0m[2;30m[0m:    [2;33m{hotm}[0m
-[2;37mSlayers[0m:[2;33m ({zombie}/{spider}/{wolf}/{enderman}/{vamp}/{blaze})""")
+[2;37mSlayers[0m:[2;33m ({zombie}/{spider}/{wolf}/{enderman}/{vamp}/{blaze})
+    [0mGenerated using ANSIgen https://github.com/interceptic/ANSIgen""")
 
         final = ansi + """
 

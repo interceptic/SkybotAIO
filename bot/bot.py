@@ -282,145 +282,147 @@ async def buy(ctx, payment_method: discord.Option(str, "Choose a Payment Method"
 
 @bot.event
 async def on_message(message):
-    
-    if message.author.id == bot.user.id and message.channel.id != 1259269840066318428:
-        return
-    if 'add bot' in message.content:
-        await message.reply('https://discord.com/oauth2/authorize?client_id=1250030190617165824&permissions=8&integration_type=0&scope=bot')
-    if '!tips' in message.content:
-        embed = await build('Bot Tips', "I'm built with many useful commands, heres a rundown:```1. /ansi - this will create a message you can use to advertise your accounts```\n\n```2. /coins - this command allows you to calculate the price of coins```\n\n```3. /value - this will generate an estimate value of what your account would sell for```\n\n```4. /offer - this command allows you to offer on accounts/profiles```\n\n```5. /buy and /sell - use these commands to create tickets```", 0x0000FF)
-        await message.reply(embed=embed)
-    if not os.path.exists("./database/database.db"):
-        return
-
-    with open("config.json") as config:
-        config = json.load(config)
-        
-    if message.channel.id == 1259269840066318428:
-        await message.delete()
-        return
     try:
-       async with aiosqlite.connect('./database/database.db') as database:
-            async with database.execute('''SELECT vouch_channel_id FROM info WHERE guild_id = ?''', (message.guild.id,)) as cursor:
-                cursor = await cursor.fetchone()
-                try:
-                    vouch_channel = cursor[0]
-                except TypeError as error:
-                    return
-            
-            
-            
-            if message.channel.id == vouch_channel:
-                try:
-                    user = message.mentions[0]
-                except IndexError as error:
-                    response = await message.channel.send('Please mention the user you are trying to vouch for')
-                    await asyncio.sleep(5)
-                    await message.delete()
-                    await response.delete()
-                    return
-            
-            
-                async with database.execute('''SELECT uuid FROM vouch WHERE guild_id = ?''', (message.guild.id,)) as cursor:
-                    cursor = await cursor.fetchone()
-                    print(cursor[0])
-                    if cursor is None:
-                        id = str(uuid.uuid4())
-                        dm = await message.guild.owner.create_dm()
-                        embed = await build('Vouch Key', f"Your server has been set up in the database, whenever a message is sent inside the vouch channel, it will be saved and backed up. **Please save this key: {id}**\nThis key will allow you to paste the vouches into a new server incase of termination, just use the /vouch command.\n**SAVE THIS KEY SOMEWHERE SAFE, OUTSIDE OF DISCORD**", 0xFFFFFF)
-                        await dm.send(embed=embed)
+        if message.author.id == bot.user.id and message.channel.id != 1259269840066318428:
+            return
+        if 'add bot' in message.content:
+            await message.reply('https://discord.com/oauth2/authorize?client_id=1250030190617165824&permissions=8&integration_type=0&scope=bot')
+        if '!tips' in message.content:
+            embed = await build('Bot Tips', "I'm built with many useful commands, heres a rundown:```1. /ansi - this will create a message you can use to advertise your accounts```\n\n```2. /coins - this command allows you to calculate the price of coins```\n\n```3. /value - this will generate an estimate value of what your account would sell for```\n\n```4. /offer - this command allows you to offer on accounts/profiles```\n\n```5. /buy and /sell - use these commands to create tickets```", 0x0000FF)
+            await message.reply(embed=embed)
+        if not os.path.exists("./database/database.db"):
+            return
 
-                    else:
-                        id = cursor[0]
+        with open("config.json") as config:
+            config = json.load(config)
+            
+        if message.channel.id == 1259269840066318428:
+            await message.delete()
+            return
+        try:
+            async with aiosqlite.connect('./database/database.db') as database:
+                async with database.execute('''SELECT vouch_channel_id FROM info WHERE guild_id = ?''', (message.guild.id,)) as cursor:
+                    cursor = await cursor.fetchone()
+                    try:
+                        vouch_channel = cursor[0]
+                    except TypeError as error:
+                        return
+                
+                
+                
+                if message.channel.id == vouch_channel:
+                    try:
+                        user = message.mentions[0]
+                    except IndexError as error:
+                        response = await message.channel.send('Please mention the user you are trying to vouch for')
+                        await asyncio.sleep(5)
+                        await message.delete()
+                        await response.delete()
+                        return
+                
+                
+                    async with database.execute('''SELECT uuid FROM vouch WHERE guild_id = ?''', (message.guild.id,)) as cursor:
+                        cursor = await cursor.fetchone()
+                        print(cursor[0])
+                        if cursor is None:
+                            id = str(uuid.uuid4())
+                            dm = await message.guild.owner.create_dm()
+                            embed = await build('Vouch Key', f"Your server has been set up in the database, whenever a message is sent inside the vouch channel, it will be saved and backed up. **Please save this key: {id}**\nThis key will allow you to paste the vouches into a new server incase of termination, just use the /vouch command.\n**SAVE THIS KEY SOMEWHERE SAFE, OUTSIDE OF DISCORD**", 0xFFFFFF)
+                            await dm.send(embed=embed)
+
+                        else:
+                            id = cursor[0]
+                            
                         
                     
-                
-                
+                    
 
-                await database.execute(
-                    '''
-                    INSERT INTO vouch (
-                        guild_id, seller_id, voucher_name, vouch_profile_picture, vouch_content, uuid  
-                    ) VALUES (?, ?, ?, ?, ?, ?)
-                    ''',
-                    (message.guild.id, user.id, message.author.name, message.author.avatar.url, message.content, id)
-                )
-                await database.commit()
-                # await message.channel.send(f"Stored data: ```{message.guild.id, user.id, message.author.name, message.author.avatar.url, message.content, id}```")
+                    await database.execute(
+                        '''
+                        INSERT INTO vouch (
+                            guild_id, seller_id, voucher_name, vouch_profile_picture, vouch_content, uuid  
+                        ) VALUES (?, ?, ?, ?, ?, ?)
+                        ''',
+                        (message.guild.id, user.id, message.author.name, message.author.avatar.url, message.content, id)
+                    )
+                    await database.commit()
+                    # await message.channel.send(f"Stored data: ```{message.guild.id, user.id, message.author.name, message.author.avatar.url, message.content, id}```")
+        except Exception as error:
+            pass
+            
+            
+        try:    
+            if message.author.id == 1227394151847297148:
+                if '1250030190617165824' in message.content:
+                    with open("ai_history.json") as file:
+                        history = json.load(file)
+                    
+                    
+                    author_id = str(message.author.id)
+                    if author_id not in history['ids']:
+                        history['ids'][author_id] = {}
+                    if 'messages' not in history['ids'][author_id]:
+                        history['ids'][author_id]['messages'] = []
+                    if 'responses' not in history['ids'][author_id]:
+                        history['ids'][author_id]['responses'] = []
+                        
+                    history['ids'][author_id]['messages'].append(message.content)
+                    with open("ai_history.json", "w") as file:
+                        json.dump(history, file, indent=4)
+                        
+                    prompt = f"A server admin in flux qol has said: {message.content}"
+                    response = openai_response(prompt, message)
+                    await message.reply(response)
+                    return
+        except:
+            pass
+            
+        if message.channel.id != 1254978027369136219:
+            return
+
+        # if message.author.id != 1227394151847297148:
+        #     return
+    
+    
+        if not config['bot']['ai_chat']:
+            await message.reply('**Sorry, the chatbot isnt currently available for member use. D: **')
+            return
+
+    
+    
+        with open("ai_history.json") as file:
+            history = json.load(file)
+            
+        author_id = str(message.author.id)
+        if author_id not in history['ids']:
+            history['ids'][author_id] = {}
+        if 'messages' not in history['ids'][author_id]:
+            history['ids'][author_id]['messages'] = []
+        if 'responses' not in history['ids'][author_id]:
+            history['ids'][author_id]['responses'] = []
+        
+        
+        history['ids'][author_id]['messages'].append(message.content)
+        with open("ai_history.json", "w") as file:
+            json.dump(history, file, indent=4)
+        
+        prompt = f"act like a friend but you are also an assistant and do what they say but do not repeat their words: {message.content}"
+        response = openai_response(prompt, message)
+        with open("ai_history.json") as file:
+            history = json.load(file)
+        history['ids'][author_id]['responses'].append(response)
+        with open("ai_history.json", "w") as file:
+            json.dump(history, file, indent=4)
+    
+    
+        if 'role' in response or '@' in response or 'discord.gg' in response or 'discord.com/invite' in response or 'https://' in response:
+            await message.reply('**Sorry, this response is restricted - ;)**')
+            print(response)
+            return
+        await message.reply(response)
+        return
     except Exception as error:
         pass
-        
-        
-    try:    
-        if message.author.id == 1227394151847297148:
-            if '1250030190617165824' in message.content:
-                with open("ai_history.json") as file:
-                    history = json.load(file)
-                
-                
-                author_id = str(message.author.id)
-                if author_id not in history['ids']:
-                    history['ids'][author_id] = {}
-                if 'messages' not in history['ids'][author_id]:
-                    history['ids'][author_id]['messages'] = []
-                if 'responses' not in history['ids'][author_id]:
-                    history['ids'][author_id]['responses'] = []
-                    
-                history['ids'][author_id]['messages'].append(message.content)
-                with open("ai_history.json", "w") as file:
-                    json.dump(history, file, indent=4)
-                    
-                prompt = f"A server admin in flux qol has said: {message.content}"
-                response = openai_response(prompt, message)
-                await message.reply(response)
-                return
-    except:
-        pass
-        
-    if message.channel.id != 1254978027369136219:
-        return
-
-    # if message.author.id != 1227394151847297148:
-    #     return
-   
-   
-    if not config['bot']['ai_chat']:
-        await message.reply('**Sorry, the chatbot isnt currently available for member use. D: **')
-        return
-
-   
-   
-    with open("ai_history.json") as file:
-        history = json.load(file)
-        
-    author_id = str(message.author.id)
-    if author_id not in history['ids']:
-        history['ids'][author_id] = {}
-    if 'messages' not in history['ids'][author_id]:
-        history['ids'][author_id]['messages'] = []
-    if 'responses' not in history['ids'][author_id]:
-        history['ids'][author_id]['responses'] = []
-    
-    
-    history['ids'][author_id]['messages'].append(message.content)
-    with open("ai_history.json", "w") as file:
-        json.dump(history, file, indent=4)
-    
-    prompt = f"act like a friend but you are also an assistant and do what they say but do not repeat their words: {message.content}"
-    response = openai_response(prompt, message)
-    with open("ai_history.json") as file:
-        history = json.load(file)
-    history['ids'][author_id]['responses'].append(response)
-    with open("ai_history.json", "w") as file:
-        json.dump(history, file, indent=4)
-   
-   
-    if 'role' in response or '@' in response or 'discord.gg' in response or 'discord.com/invite' in response or 'https://' in response:
-        await message.reply('**Sorry, this response is restricted - ;)**')
-        print(response)
-        return
-    await message.reply(response)
-    return
 
 @bot.slash_command(name='offer', description='Offer what you would pay for an account, false offers will result in punishment')
 async def offer(ctx,account: discord.Option(str, "Choose what to buy", autocomplete=on_application_command_autocomplete), offer: int, payment_method: discord.Option(str, "Choose a Payment Method", choices=["Cashapp", "Venmo", "Paypal", "LTC", "BTC", "Gift Card", "Other"]), clear: bool=False):
