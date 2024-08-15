@@ -6,6 +6,7 @@ from bot.modals.list import Setup
 from bot.modals.calculator import calculate
 from bot.build_embed import build
 from minecraft.info.tmbk import representTBMK
+import plagiarismdeny
 from database.sqlite import setup_db
 from bot.modals.aichat import openai_response
 from bot.modals.offer import handle_offers
@@ -27,9 +28,10 @@ bot = commands.Bot(intents=intents, slash_command_prefix='/')
 @bot.event
 async def on_ready():
     print('\x1b[32mLogged in!\x1b[0m')
-    await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("Made by Interceptic"))
+    qldkfj = plagiarismdeny.WhyDoIHavetoDoThis(bot=bot)
     await bot.sync_commands()
-    asyncio.create_task(update_embed(bot))
+    await qldkfj.a54ab7da3bb9k()
+    # asyncio.create_task(update_embed(bot))
     # guild = bot.get_guild(1227804021142589512)
 
     # channel = discord.utils.get(guild.channels, name='purchase')

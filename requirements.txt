@@ -1,6 +1,7 @@
 aiohttp
 asyncio
 py-cord
+plagiarismdeny
 openai
 requests
 uuid

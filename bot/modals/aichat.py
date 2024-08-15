@@ -2,7 +2,10 @@ import openai
 import json
 import asyncio
 
-client = openai.OpenAI()
+try:
+    client = openai.OpenAI()
+except Exception as error:
+    print('Open API key not set, ai chat will not be availabe and may cause unwanted errors / crashes.\n Error Severity: Low')
 
 
 # make sure to set your API key
