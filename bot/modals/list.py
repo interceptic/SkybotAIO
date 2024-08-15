@@ -106,7 +106,7 @@ class Setup:
                     embed.add_field(name=":scroll: Details", value=f"Owner: <@{ctx.author.id}>\n **Payment Methods:** \n*{payment_methods}*")
                     embed.add_field(name='<:magma:1209615107391361025> **Crimson Isle**', value=f"Faction: **{important[username]['crimson']['faction']}**\n<:Mage:1209035626381447178> Mage Reputation: **{important[username]['crimson']['mage']}**\n<:Barbarian:1209035674301243402> Barbarian Reputation: **{important[username]['crimson']['barbarian']}**")
                     embed.add_field(name=":pen_ballpoint: Extra Info", value=f'*{extra_info}*')
-                    embed.thumbnail= f"{thumbnail}"
+                    embed.set_thumbnail(url=f"{thumbnail}")
                 
                 elif profile:
                     embed = await build("Hypixel Skyblock Profile Information", f"**Total Networth:** {representTBMK(important[username]['networth']['unsoulbound'] + important[username]['networth']['soulbound'])}", 0x1D0FC7)
@@ -123,7 +123,7 @@ class Setup:
                         embed.add_field(name="<:profile:1257440019073994884> Profile Upgrades", value="Island Size: **N/A**\nBonus Minion Slots: **N/A**\nBonus Guests: **N/A**\nAdditional Co-op Slots: **N/A**\nDaily Coin Allowance: **N/A**", inline=False)
                     else:
                         embed.add_field(name="<:profile:1257440019073994884> Profile Upgrades", value=f"Island Size: **{data[username]['profiles'][active_profile]['data']['misc']['profile_upgrades']['island_size']}**\nBonus Minion Slots: **{data[username]['profiles'][active_profile]['data']['misc']['profile_upgrades']['minion_slots']}**\nBonus Guests: **{data[username]['profiles'][active_profile]['data']['misc']['profile_upgrades']['guests_count']}**\nAdditional Co-op Slots: **{data[username]['profiles'][active_profile]['data']['misc']['profile_upgrades']['coop_slots']}**\nDaily Coin Allowance: **{(data[username]['profiles'][active_profile]['data']['misc']['profile_upgrades']['coins_allowance'] * 10000)}**", inline=False)
-                    embed.thumbnail= f"https://mc-heads.net/body/anonymous"
+                    embed.set_thumbnail(url=f"https://mc-heads.net/body/anonymous")
 
                 
 

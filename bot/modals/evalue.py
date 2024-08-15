@@ -31,7 +31,7 @@ class Embed:
         embed.set_footer(text='Made by interceptic', icon_url='https://avatars.githubusercontent.com/u/121205983?s=400&u=e5e1ec3c308a713e198f46aff29038bc4dca1d9d&v=4')
         embed.timestamp = datetime.datetime.now()
         self.uuid = await user_data(ctx, username)
-        embed.thumbnail = f"https://mc-heads.net/head/{self.uuid['id']}.png/"   
+        embed.set_thumbnail(url = f"https://mc-heads.net/head/{self.uuid['id']}.png/") 
         
         self.important, pointless_var = await handle_stats(self.name, self.username)
         self.priced, more_var = await pricer(self.important, self.username)
@@ -87,7 +87,7 @@ class Embed:
             color=0xFFFFFF)
         embed.set_footer(text='Made by interceptic', icon_url='https://avatars.githubusercontent.com/u/121205983?s=400&u=e5e1ec3c308a713e198f46aff29038bc4dca1d9d&v=4')
         embed.timestamp = datetime.datetime.now()
-        embed.thumbnail = f"https://mc-heads.net/head/{self.uuid['id']}.png/"   
+        embed.set_thumbnail(url = f"https://mc-heads.net/head/{self.uuid['id']}.png/") 
         view = View()
         view.add_item(self.select)
         embed.add_field(name="**Total Price**", value = f"${round(self.priced[self.username]['total'], 2)}", inline=False)

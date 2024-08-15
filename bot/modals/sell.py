@@ -56,7 +56,7 @@ async def sell_account(ctx, username, price, bot, the_json, payment_method):
         embed.add_field(name='**Crimson Isle**', value=f"${round(priced[username]['total_crimson'], 2)}")
         embed.add_field(name='**Slayers**', value=f"${round(priced[username]['total_slayers'], 2)}")
         embed.add_field(name='**Skills**', value=f"${round(priced[username]['total_skills'], 2)}")
-        embed.thumbnail= f"https://mc-heads.net/head/{uuid['id']}.png/"   
+        embed.set_thumbnail(url=f"https://mc-heads.net/head/{uuid['id']}.png/"   )
         
         await sell_ticket.send(embed=embed)
         embed = await build(f"Recommended Buy Price: ${round(priced[username]['total'] * 0.65, 2)}", "**A seller will likely offer at or near this price**", 0xFFFFFF)
