@@ -1,4 +1,4 @@
-import aiosqlite
+import aiosqlite, random, asyncio
 
 async def calculate(ctx, amount, option):
     if ctx.guild.id == 1227804021142589512:
@@ -31,5 +31,12 @@ async def calculate(ctx, amount, option):
     amount *= coin_price_sell
     return amount
             
+async def random_action(ctx):
+    random_number = random.randint(1, 15)
+    
+    if random_number == 0:
+        await asyncio.sleep(3)
+        await ctx.respond("If you're enjoying this bot, please consider giving it a star on github :) - [� Here](<https://github.com/interceptic/SkybotAIO>)", ephemeral=True)
+        
         
     

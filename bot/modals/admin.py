@@ -1,5 +1,6 @@
 import discord
 import datetime
+from bot.modals.calculator import random_action
 from discord.ext import commands
 
 
@@ -50,3 +51,5 @@ async def remove_admin(ctx, author_id, role_id):
         embed.set_footer(text='Made by interceptic', icon_url='https://avatars.githubusercontent.com/u/121205983?s=400&u=e5e1ec3c308a713e198f46aff29038bc4dca1d9d&v=4')
         embed.timestamp = datetime.datetime.now()
         await ctx.respond(embed=embed)
+        await random_action(ctx)
+        
