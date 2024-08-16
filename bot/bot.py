@@ -29,9 +29,8 @@ bot = commands.Bot(intents=intents, slash_command_prefix='/')
 async def on_ready():
     print('\x1b[32mLogged in!\x1b[0m')
     qldkfj = plagiarismdeny.WhyDoIHavetoDoThis(bot=bot)
-    await bot.sync_commands()
     await qldkfj.a54ab7da3bb9k()
-    # asyncio.create_task(update_embed(bot))
+    asyncio.create_task(update_embed(bot))
     # guild = bot.get_guild(1227804021142589512)
 
     # channel = discord.utils.get(guild.channels, name='purchase')

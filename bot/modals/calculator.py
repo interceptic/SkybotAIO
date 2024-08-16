@@ -32,9 +32,9 @@ async def calculate(ctx, amount, option):
     return amount
             
 async def random_action(ctx):
-    random_number = random.randint(1, 15)
+    random_number = random.randint(0, 15)
     
-    if random_number == 0:
+    if random_number == 1:
         await asyncio.sleep(3)
         await ctx.respond("If you're enjoying this bot, please consider giving it a star on github :) - [� Here](<https://github.com/interceptic/SkybotAIO>)", ephemeral=True)
         
