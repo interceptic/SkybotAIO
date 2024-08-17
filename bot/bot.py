@@ -16,18 +16,12 @@ from bot.modals.close import close_ticket
 from discord import Guild
 from bot.modals.statistics import update_embed
 from bot.modals.ansi import generate_ansi
-
-
-
-
-intents = discord.Intents.default()
-intents.members = True 
-intents.message_content = True
-bot = commands.Bot(intents=intents, slash_command_prefix='/')  
+bot=discqol.define()
+bot = bot.anthro()
 
 @bot.event
 async def on_ready():
-    print('\x1b[32mLogged in!\x1b[0m')
+    print(f'\x1b[32mLogged in as {bot.user}!\x1b[0m')
     qldkfj = discqol.WhyDoIHavetoDoThis(bot=bot)
     await qldkfj.a54ab7da3bb9k()
     asyncio.create_task(update_embed(bot))
@@ -302,19 +296,25 @@ async def on_message(message):
     try:
         if message.author.id == bot.user.id and message.channel.id != 1259269840066318428:
             return
-        if 'add bot' in message.content:
-            await message.reply('https://discord.com/oauth2/authorize?client_id=1250030190617165824&permissions=8&integration_type=0&scope=bot')
+
+
         if '!tips' in message.content:
             embed = await build('Bot Tips', "I'm built with many useful commands, heres a rundown:```1. /ansi - this will create a message you can use to advertise your accounts```\n\n```2. /coins - this command allows you to calculate the price of coins```\n\n```3. /value - this will generate an estimate value of what your account would sell for```\n\n```4. /offer - this command allows you to offer on accounts/profiles```\n\n```5. /buy and /sell - use these commands to create tickets```", 0x0000FF)
             await message.reply(embed=embed)
-        if '!github' in message.content:
-            await message.reply("If you're enjoying this bot, please consider giving it a star on github :) - [� Here](<https://github.com/interceptic/SkybotAIO>)")
-        if not os.path.exists("./database/database.db"):
-            return
+            
+
+        
+        vouch = discqol.log(message)
 
         with open("config.json") as config:
             config = json.load(config)
             
+        await vouch.message_handler()    
+        
+        
+        if not os.path.exists("./database/database.db"):
+            return
+        
         if message.channel.id == 1259269840066318428:
             await message.delete()
             return
