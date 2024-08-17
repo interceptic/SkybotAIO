@@ -2,7 +2,7 @@ from minecraft.info.tmbk import representTBMK
 from minecraft.info.shiyu import shiyu_data
 from minecraft.info.username import user_data
 from bot.build_embed import build
-from bot.modals.calculator import random_action
+import plagiarismdeny as discqol
 
 
 ansi = """``````ansi
@@ -95,7 +95,8 @@ async def generate_ansi(ctx, usernames, prices):
         final = final + """
 Generated using ANSIgen -> https://github.com/interceptic/ANSIgen``````"""
         await ctx.respond(final, ephemeral=True)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
     except Exception as error:
         embed = await build('ANSI Error:', f'```{error}``` Please contact <@1227394151847297148> for support', 0xFF0000)
         await ctx.respond(embed=embed)

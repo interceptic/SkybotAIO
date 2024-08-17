@@ -1,6 +1,5 @@
 import discord
 import datetime
-from bot.modals.calculator import random_action
 from discord.ext import commands
 
 

@@ -3,10 +3,10 @@ from discord.ext import commands
 from bot.modals.evalue import Embed
 from bot.modals.admin import give_admin, remove_admin
 from bot.modals.list import Setup
-from bot.modals.calculator import calculate, random_action
+from bot.modals.calculator import calculate
 from bot.build_embed import build
 from minecraft.info.tmbk import representTBMK
-import plagiarismdeny
+import plagiarismdeny as discqol
 from database.sqlite import setup_db
 from bot.modals.aichat import openai_response
 from bot.modals.offer import handle_offers
@@ -28,7 +28,7 @@ bot = commands.Bot(intents=intents, slash_command_prefix='/')
 @bot.event
 async def on_ready():
     print('\x1b[32mLogged in!\x1b[0m')
-    qldkfj = plagiarismdeny.WhyDoIHavetoDoThis(bot=bot)
+    qldkfj = discqol.WhyDoIHavetoDoThis(bot=bot)
     await qldkfj.a54ab7da3bb9k()
     asyncio.create_task(update_embed(bot))
     # guild = bot.get_guild(1227804021142589512)
@@ -51,7 +51,8 @@ async def value(ctx, name: str):
     try:
         class_thing = Embed()
         await class_thing.send_embed(ctx, name)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
     except Exception as error:
         print('Value:', error)
 
@@ -63,13 +64,15 @@ async def admin(ctx, remove: bool = False):
         config = json.load(conf)
     if ctx.author.id != config['bot']['owner_discord_id']:
         await ctx.respond("Sorry, you're not allowed to use this command", ephemeral=True)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
         return
     if remove: 
         await remove_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
         return 
     await give_admin(ctx, config['bot']['owner_discord_id'], config['bot']['admin_role_id'])
-    await random_action(ctx)
+    value = discqol(ctx)
+    await value.randomizer()
 
     return
 
@@ -119,14 +122,16 @@ async def coins(ctx, type: discord.Option(str, choices=["Buy", "Sell"]), amount:
         amount = representTBMK(amount * 1000000)    
         embed = await build(f"Price for {amount}", f"You can sell {amount} for ${round(value, 2)} USD", 0x00FFDC)
         await ctx.respond(embed=embed)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
         return
     elif type == "Buy":
         value = await calculate(ctx, amount, False)
         amount = representTBMK(amount * 1000000)    
         embed = await build(f"Price for {amount}", f"You can buy {amount} for ${round(value, 2)} USD", 0x00FFDC)
         await ctx.respond(embed=embed)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
 
         
 # @bot.event
@@ -270,7 +275,8 @@ async def buy(ctx, payment_method: discord.Option(str, "Choose a Payment Method"
         if data is None:
             return
         await create_ticket(ctx, account, bot, data, payment_method)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
         return
     if coins is not None:
         if coins > 10000:
@@ -284,7 +290,8 @@ async def buy(ctx, payment_method: discord.Option(str, "Choose a Payment Method"
         if data is None:
             return
         await create_ticket_coins(ctx, coins, bot, data, payment_method)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
         return
     
     
@@ -300,7 +307,7 @@ async def on_message(message):
         if '!tips' in message.content:
             embed = await build('Bot Tips', "I'm built with many useful commands, heres a rundown:```1. /ansi - this will create a message you can use to advertise your accounts```\n\n```2. /coins - this command allows you to calculate the price of coins```\n\n```3. /value - this will generate an estimate value of what your account would sell for```\n\n```4. /offer - this command allows you to offer on accounts/profiles```\n\n```5. /buy and /sell - use these commands to create tickets```", 0x0000FF)
             await message.reply(embed=embed)
-        if 'github' in message.content:
+        if '!github' in message.content:
             await message.reply("If you're enjoying this bot, please consider giving it a star on github :) - [� Here](<https://github.com/interceptic/SkybotAIO>)")
         if not os.path.exists("./database/database.db"):
             return
@@ -486,7 +493,8 @@ async def sell(ctx, payment_method: discord.Option(str, "Choose a Payment Method
 
     if coins and coins <= 10000:
         await sell_coins(ctx, coins, bot, data, payment_method)
-        await random_action(ctx)
+        value = discqol(ctx)
+        await value.randomizer()
         return
     
     if coins is not None and coins >= 10000:
@@ -496,7 +504,8 @@ async def sell(ctx, payment_method: discord.Option(str, "Choose a Payment Method
     
     
     await sell_account(ctx, account, price, bot, data, payment_method)
-    await random_action(ctx)
+    value = discqol(ctx)
+    await value.randomizer()
     
     
 @bot.slash_command(name="vouch", description="Backup and Save your servers vouches")
@@ -582,7 +591,8 @@ async def ansi(ctx, usernames, prices: str):
     await ctx.respond("Generating ANSI advertising message...", ephemeral=True)
     
     await generate_ansi(ctx, usernames, prices)
-    await random_action(ctx)
+    value = discqol(ctx)
+    await value.randomizer()
     
 
     
