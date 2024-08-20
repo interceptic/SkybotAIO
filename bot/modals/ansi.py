@@ -95,8 +95,6 @@ async def generate_ansi(ctx, usernames, prices):
         final = final + """
 Generated using ANSIgen -> https://github.com/interceptic/ANSIgen``````"""
         await ctx.respond(final, ephemeral=True)
-        value = discqol(ctx)
-        await value.randomizer()
     except Exception as error:
         embed = await build('ANSI Error:', f'```{error}``` Please contact <@1227394151847297148> for support', 0xFF0000)
         await ctx.respond(embed=embed)
