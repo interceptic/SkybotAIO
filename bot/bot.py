@@ -304,7 +304,6 @@ async def on_message(message):
 
         
         vouch = discqol.log(message)
-        await vouch.message_handler()
         with open("config.json") as config:
             config = json.load(config)
             
